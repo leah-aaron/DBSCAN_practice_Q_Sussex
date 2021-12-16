@@ -1,0 +1,49 @@
+---
+title: "DBSCAN PPA Practice Question"
+author: "Leah Aaron"
+date: "16/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## First I will load the packages
+```{r }
+library(here)
+library(OpenStreetMap)
+library(tidyverse)
+library(sf)
+library(rgdal)
+library(magrittr)
+library(janitor)
+```
+#Reading in the Data 
+```{r}
+poi_east_sussex <- st_read(here::here("east-sussex-latest-free.shp",
+                           "gis_osm_pois_a_free_1.shp")) %>%
+  st_transform(., 27700) %>%
+  #select hotels only
+  filter(fclass == 'pub')
+## looking at the data in excel, the first row are headers, NAs are blank, lat and long are in seperate columns (thank god). However there are no dates- interesting
+crime_data_october <- read_csv(here::here("25f9fd74a80cc61fcb55a1c231061cd39528c7ca",
+                                         "2021-10",
+                                         "2021-10-sussex-street.csv"),
+                       na = c("", " ", "NA", "n/a")) %>%
+  clean_names()
+
+LSOA <- st_read(here::here("Lower_Super_Output_Area_(LSOA)_IMD2019__(WGS84)-shp",                        "5878ebcf-f091-4bde-8864-aa547dd45afd2020330-1-8g4usn.8evuq.shp")) %>%
+  st_transform(., 27700)
+
+```
+```{r Make spatial object}
+
+```
+
+
